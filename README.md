@@ -23,7 +23,7 @@ That said, please feel free to use this software however you like.
 ### Installing
 There are two files you will need to use:
 * `requirements.txt`, located at the project root
-* `Cargo.toml`, located in `lib/`
+* `Cargo.toml`, located in `mapi.rs/lib/`
 
 Run `pip install -r requirements.txt` at the project's root directory, then head into `lib/` and run `cargo build`.
 
