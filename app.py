@@ -19,7 +19,7 @@ else:
     ext = 'so'
 
 # Set up FFI
-lib = cdll.LoadLibrary('mapi.rs/lib/target/debug/{}mapi.{}'.format(prefix, ext))
+MAPI = cdll.LoadLibrary('mapi.rs/lib/target/debug/{}mapi.{}'.format(prefix, ext))
 
 #############
 # VARIABLES #
@@ -44,7 +44,17 @@ def index():
 @app.route('/filescount')
 def filescount():
     print('[*] Request to /filescount called...')
-    return str(lib.get_files_count())
+    return 'File Count: ' + str(MAPI.get_files_count())
+
+@app.route('/hdd-available')
+def getHddAvail():
+    print('[*] Request to /hdd-available called...')
+    return "HDD Space Available: {} GB's".format(int(MAPI.get_harddisk_avail() / 1024))
+
+@app.route('/ram-used')
+def getRamUsed():
+    print('[*] Request to /ram-used called...')
+    return "RAM Used: {} GB's".format(int(MAPI.get_ram_used() / 1024))
 
 if __name__ == '__main__':
     app.run()
