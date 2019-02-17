@@ -2,6 +2,9 @@ from ctypes import cdll
 from flask import Flask
 from sys import platform
 
+import os
+import os.path
+
 #########
 # SETUP #
 #########
@@ -18,8 +21,26 @@ else:
     prefix = 'lib'
     ext = 'so'
 
+lib = '{}mapi.{}'.format(prefix, ext)
+
 # Set up FFI
-MAPI = cdll.LoadLibrary('mapi.rs/lib/target/debug/{}mapi.{}'.format(prefix, ext))
+if os.path.isdir('../mapi.rs/lib/target/release') == True and os.path.isfile('../mapi.rs/lib/target/release/{}'.format(lib))== True:
+    MAPI = cdll.LoadLibrary('../mapi.rs/lib/target/release/{}'.format(lib))
+elif os.path.isdir('mapi.rs/lib/target/debug') == True and os.path.isfile('mapi.rs/lib/target/debug/{}'.format(lib)):
+    MAPI = cdll.LoadLibrary('/mapi.rs/lib/target/debug/{}'.format(lib))
+else:
+    if os.path.basename(os.getcwd()) == 'mapi':
+        print('Creating shared library...')
+        os.system('cd ../mapi.rs/lib/; make clean; make test')
+        MAPI = cdll.LoadLibrary('target/release/{}'.format(lib))
+    elif os.path.basename(os.getcwd()) == 'mapi.py':
+        print('Creating shared library...')
+        os.system('cd mapi.rs/lib; make clean; make test')
+        MAPI = cdll.LoadLibrary('target/debug/{}'.format(lib))
+    else:
+        print('Something went wrong. Are you working with a clean download of the source code?')
+        exit(1)
+
 
 #############
 # VARIABLES #
