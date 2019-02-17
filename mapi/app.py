@@ -2,6 +2,9 @@ from ctypes import cdll
 from flask import Flask
 from sys import platform
 
+import os
+import os.path
+
 #########
 # SETUP #
 #########
@@ -18,8 +21,16 @@ else:
     prefix = 'lib'
     ext = 'so'
 
+lib = '{}mapi.{}'.format(prefix, ext)
+
 # Set up FFI
-MAPI = cdll.LoadLibrary('mapi.rs/lib/target/debug/{}mapi.{}'.format(prefix, ext))
+if os.path.isdir('../mapi.rs/lib/target/release') == True and os.path.isfile('../mapi.rs/lib/target/release/{}'.format(lib)) == True:
+    MAPI = cdll.LoadLibrary('../mapi.rs/lib/target/release/{}'.format(lib))
+elif os.path.isdir('../mapi.rs/lib/target/debug') == True and os.path.isfile('../mapi.rs/lib/target/debug/{}'.format(lib)) == True:
+    MAPI = cdll.LoadLibrary('../mapi.rs/lib/target/debug/{}'.format(lib))
+else:
+    print("'{}' shared library cannot be found. Did you generate it? If not, go to mapi.py/mapi.rs/lib && run 'make'".format(lib))
+    exit(1)
 
 #############
 # VARIABLES #
