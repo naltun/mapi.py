@@ -21,13 +21,13 @@ else:
     prefix = 'lib'
     ext = 'so'
 
-lib = '{}mapi.{}'.format(prefix, ext)
+lib = "{}mapi.{}".format(prefix, ext)
 
 # Set up FFI
-if os.path.isdir('../mapi.rs/lib/target/release') == True and os.path.isfile('../mapi.rs/lib/target/release/{}'.format(lib)) == True:
-    MAPI = cdll.LoadLibrary('../mapi.rs/lib/target/release/{}'.format(lib))
-elif os.path.isdir('../mapi.rs/lib/target/debug') == True and os.path.isfile('../mapi.rs/lib/target/debug/{}'.format(lib)) == True:
-    MAPI = cdll.LoadLibrary('../mapi.rs/lib/target/debug/{}'.format(lib))
+if os.path.isdir('../mapi.rs/target/release') == True and os.path.isfile('../mapi.rs/target/release/{}'.format(lib)) == True:
+    MAPI = cdll.LoadLibrary('../mapi.rs/target/release/{}'.format(lib))
+elif os.path.isdir('../mapi.rs/target/debug') == True and os.path.isfile('../mapi.rs/target/debug/{}'.format(lib)) == True:
+    MAPI = cdll.LoadLibrary('../mapi.rs/target/debug/{}'.format(lib))
 else:
     print("'{}' shared library cannot be found. Did you generate it? If not, go to mapi.py/mapi.rs/lib && run 'make'".format(lib))
     exit(1)
@@ -67,5 +67,8 @@ def getRamUsed():
     print('[*] Request to /ram-used called...')
     return "RAM Used: {} GB's".format(int(MAPI.get_ram_used() / 1024))
 
-if __name__ == '__main__':
+def main():
     app.run()
+
+if __name__ == '__main__':
+    main()
