@@ -24,9 +24,9 @@ else:
 lib = "{}mapi.{}".format(prefix, ext)
 
 # Set up FFI
-if os.path.isdir('../mapi.rs/target/release') == True and os.path.isfile('../mapi.rs/target/release/{}'.format(lib)) == True:
+if os.path.isdir('../mapi.rs/target/release') and os.path.isfile('../mapi.rs/target/release/{}'.format(lib)):
     MAPI = cdll.LoadLibrary('../mapi.rs/target/release/{}'.format(lib))
-elif os.path.isdir('../mapi.rs/target/debug') == True and os.path.isfile('../mapi.rs/target/debug/{}'.format(lib)) == True:
+elif os.path.isdir('../mapi.rs/target/debug') and os.path.isfile('../mapi.rs/target/debug/{}'.format(lib)):
     MAPI = cdll.LoadLibrary('../mapi.rs/target/debug/{}'.format(lib))
 else:
     print("'{}' shared library cannot be found. Did you generate it? If not, go to mapi.py/mapi.rs/lib && run 'make'".format(lib))
