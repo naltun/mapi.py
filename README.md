@@ -23,9 +23,9 @@ That said, please feel free to use this software however you like.
 ### Installing
 There are two files you will need to use:
 * `requirements.txt`, located at the project root
-* `Cargo.toml`, located in `mapi.rs/lib/`
+* `Cargo.toml`, located in `mapi.rs/`
 
-Run `pip install -r requirements.txt` at the project's root directory, then head into `lib/` and run `cargo build`.
+Run `pip install -r requirements.txt` at the project's root directory, then head into `mapi.rs/` and run `make`.
 
 #### Rust requirements
 ```shell
